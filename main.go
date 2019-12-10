@@ -39,6 +39,8 @@ func serveReverseProxy(target string, apiKey apiData, res http.ResponseWriter, r
 	fmt.Println(req.URL.Path)
 	fmt.Println(req.URL.RawQuery)
 
+	res.Header().Set("Access-Control-Allow-Origin", "*")
+	res.Header().Set("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS")
 	// Note that ServeHttp is non blocking and uses a go routine under the hood
 	proxy.ServeHTTP(res, req)
 }
