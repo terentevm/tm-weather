@@ -1,1 +1,1 @@
-web: bin/weather
+web: bin/tm-weather
