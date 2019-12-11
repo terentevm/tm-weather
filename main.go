@@ -95,6 +95,10 @@ func main() {
 	apixuAPIKEey = os.Getenv("WEATHERSTACK_API_KEY")
 	yaAPIKEey = os.Getenv("YA_WEATHER_API_KEY")
 	
+	if apixuAPIKEey == "" || yaAPIKEey == "" {
+		log.Fatal("Failed to initialize API variables")
+	}
+
 	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
 		query, ok := req.URL.Query()["query"]
 		if ok {
