@@ -10,6 +10,9 @@ import (
 	"os"
 )
 
+var yaAPIKEey string
+var apixuAPIKEey string 
+
 type apiData struct {
 	ParamName string
 	Key       string
@@ -69,7 +72,7 @@ func handleAutocomplete(res http.ResponseWriter, req *http.Request) {
 
 	targetURL := "https://api.weatherstack.com"
 
-	apixuAPIKEey := os.Getenv("WEATHERSTACK_API_KEY")
+	
 
 	keyData := apiData{ParamName: "access_key", Key: apixuAPIKEey}
 
@@ -78,9 +81,8 @@ func handleAutocomplete(res http.ResponseWriter, req *http.Request) {
 }
 
 func handleForecast(res http.ResponseWriter, req *http.Request) {
+	
 	targetURL := "https://api.weather.yandex.ru"
-
-	yaAPIKEey := os.Getenv("YA_WEATHER_API_KEY")
 
 	serveYandexWeatherSP(targetURL, yaAPIKEey, res, req)
 
@@ -88,11 +90,11 @@ func handleForecast(res http.ResponseWriter, req *http.Request) {
 
 func main() {
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	_ = godotenv.Load()
 
+	apixuAPIKEey = os.Getenv("WEATHERSTACK_API_KEY")
+	yaAPIKEey = os.Getenv("YA_WEATHER_API_KEY")
+	
 	http.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
 		query, ok := req.URL.Query()["query"]
 		if ok {
